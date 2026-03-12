@@ -25,8 +25,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.dmSansTextTheme(),
-      ),
-      theme: ThemeData(
         colorScheme: const ColorScheme.light(
           primary: AppColors.spaceIndigo,
           secondary: AppColors.honeyBronze,
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: AppColors.thistle,
       ),
-      home: const const HomePage(),,
+      home: const HomePage(),
     );
   }
 }
