@@ -1,4 +1,4 @@
-import 'package:astrophotography_blog/screens/home.dart';
+import 'package:astrophotography_blog/screens/nav_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: AppColors.thistle,
       ),
-      home: const HomePage(),
+      home: const NavWrapper(),
     );
   }
 }

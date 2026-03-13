@@ -1,17 +1,12 @@
 // home screen code
 import 'package:flutter/material.dart';
 import 'package:astrophotography_blog/services/auth_service.dart';
-import 'package:astrophotography_blog/screens/new_post.dart';
+import 'package:astrophotography_blog/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static const Color honeyBronze = Color(0xFFFCB454);
-  static const Color thistle = Color(0xFFCBC3D5);
-  static const Color vintageLavender = Color(0xFF73628A);
-  static const Color spaceIndigo = Color(0xFF302C5C);
-  static const Color prussianBlue = Color(0xFF141C34);
 
   Widget _buildChallengeCard(
     BuildContext context,
@@ -19,13 +14,14 @@ class HomePage extends StatelessWidget {
     String name,
     String description,
   ) {
+    final cardWidth = (MediaQuery.of(context).size.width - 32 - 16 - 36) / 3;
     return GestureDetector(
       onTap: () => _showChallengeDialog(context, icon, name, description),
       child: Container(
-        width: 140,
+        width: cardWidth,
         margin: const EdgeInsets.symmetric(horizontal: 6.0),
         decoration: BoxDecoration(
-          color: vintageLavender.withValues(alpha: 0.3),
+          color: AppColors.vintageLavender.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.white, width: 0.5),
         ),
@@ -33,7 +29,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 36, color: honeyBronze),
+            Icon(icon, size: 36, color: AppColors.honeyBronze),
             const SizedBox(height: 8),
             Text(
               name,
@@ -49,7 +45,7 @@ class HomePage extends StatelessWidget {
               description,
               style: TextStyle(
                 fontSize: 11,
-                color: thistle,
+                color: AppColors.thistle,
               ),
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -70,13 +66,13 @@ class HomePage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: spaceIndigo,
+        backgroundColor: AppColors.spaceIndigo,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         title: Column(
           children: [
-            Icon(icon, size: 48, color: honeyBronze),
+            Icon(icon, size: 48, color: AppColors.honeyBronze),
             const SizedBox(height: 8),
             Text(
               name,
@@ -87,15 +83,15 @@ class HomePage extends StatelessWidget {
         ),
         content: Text(
           description,
-          style: TextStyle(color: thistle),
+          style: TextStyle(color: AppColors.thistle),
           textAlign: TextAlign.center,
         ),
         actions: [
           Center(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: honeyBronze,
-                foregroundColor: prussianBlue,
+                backgroundColor: AppColors.honeyBronze,
+                foregroundColor: AppColors.prussianBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -130,11 +126,26 @@ class HomePage extends StatelessWidget {
     },
   ];
 
+  Widget _buildActionButton(IconData icon) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.white, width: 0.5),
+        ),
+        child: Icon(icon, color: Colors.white, size: 18),
+      ),
+    );
+  }
+
   Widget _buildPostCard(Map<String, String> post) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: spaceIndigo,
+        color: AppColors.spaceIndigo,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -146,7 +157,7 @@ class HomePage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: vintageLavender,
+                  backgroundColor: AppColors.vintageLavender,
                   child: Text(
                     post['username']![0].toUpperCase(),
                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -173,17 +184,12 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.favorite_border, color: Colors.white),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.ios_share, color: Colors.white),
-                  onPressed: () {},
-                ),
+                _buildActionButton(Icons.favorite_border),
+                const SizedBox(width: 8),
+                _buildActionButton(Icons.ios_share),
               ],
             ),
           ),
@@ -191,7 +197,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(left: 12, right: 12),
             child: Text(
               post['caption']!,
-              style: TextStyle(color: thistle, fontSize: 14),
+              style: TextStyle(color: AppColors.thistle, fontSize: 14),
             ),
           ),
           Theme(
@@ -201,10 +207,10 @@ class HomePage extends StatelessWidget {
               minTileHeight: 36,
               title: Text(
                 'Camera Settings',
-                style: TextStyle(color: honeyBronze, fontSize: 13),
+                style: TextStyle(color: AppColors.honeyBronze, fontSize: 13),
               ),
-              iconColor: honeyBronze,
-              collapsedIconColor: honeyBronze,
+              iconColor: AppColors.honeyBronze,
+              collapsedIconColor: AppColors.honeyBronze,
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
@@ -213,10 +219,10 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Camera: ${post['camera']}', style: TextStyle(color: thistle, fontSize: 12)),
-                        Text('ISO: ${post['iso']}', style: TextStyle(color: thistle, fontSize: 12)),
-                        Text('Aperture: ${post['aperture']}', style: TextStyle(color: thistle, fontSize: 12)),
-                        Text('Exposure: ${post['exposure']}', style: TextStyle(color: thistle, fontSize: 12)),
+                        Text('Camera: ${post['camera']}', style: TextStyle(color: AppColors.thistle, fontSize: 12)),
+                        Text('ISO: ${post['iso']}', style: TextStyle(color: AppColors.thistle, fontSize: 12)),
+                        Text('Aperture: ${post['aperture']}', style: TextStyle(color: AppColors.thistle, fontSize: 12)),
+                        Text('Exposure: ${post['exposure']}', style: TextStyle(color: AppColors.thistle, fontSize: 12)),
                       ],
                     ),
                   ),
@@ -238,7 +244,7 @@ class HomePage extends StatelessWidget {
             Icon(
               Icons.nightlight_round,
               size: 48,
-              color: honeyBronze,
+              color: AppColors.honeyBronze,
             ),
             const SizedBox(height: 16),
             Text(
@@ -246,7 +252,7 @@ class HomePage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: thistle,
+                color: AppColors.thistle,
               ),
             ),
           ],
@@ -264,7 +270,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: prussianBlue,
+      backgroundColor: AppColors.prussianBlue,
       body: Stack(
         children: [
           Positioned.fill(
@@ -277,40 +283,18 @@ class HomePage extends StatelessWidget {
             ),
           ),
           SafeArea(
+            bottom: false,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: honeyBronze,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.add, color: prussianBlue),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const NewPostPage(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.only(top: 32.0, bottom: 16.0),
                     child: Text(
                       'welcome back\nto the stars',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.cedarvilleCursive(
                         fontSize: 28,
-                        color: honeyBronze,
+                        color: AppColors.honeyBronze,
                       ),
                     ),
                   ),
@@ -323,7 +307,7 @@ class HomePage extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 14),
                           padding: const EdgeInsets.only(top: 16, bottom: 12),
                           decoration: BoxDecoration(
-                            border: Border.all(color: vintageLavender, width: 1.5),
+                            border: Border.all(color: AppColors.vintageLavender, width: 1.5),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: SizedBox(
@@ -359,13 +343,13 @@ class HomePage extends StatelessWidget {
                           left: 16,
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            color: prussianBlue,
+                            color: AppColors.prussianBlue,
                             child: Text(
                               'Daily Challenges',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: thistle,
+                                color: AppColors.thistle,
                               ),
                             ),
                           ),
@@ -378,12 +362,12 @@ class HomePage extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: 32),
-                        Icon(Icons.nightlight_round, size: 48, color: honeyBronze),
+                        Icon(Icons.nightlight_round, size: 48, color: AppColors.honeyBronze),
                         const SizedBox(height: 16),
                         Text(
                           'no new posts,\ncurrently mesmerized by the moon',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: thistle),
+                          style: TextStyle(fontSize: 16, color: AppColors.thistle),
                         ),
                       ],
                     )
